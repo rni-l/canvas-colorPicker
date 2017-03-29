@@ -227,6 +227,6 @@ if (typeof(module) !== 'undefined') {
 } else if (typeof define === 'function' && define.amd) {
   define([], function() {
     'use strict';
-    return window.Swiper;
+    return window.ColorPicker;
   });
 }
