@@ -91,7 +91,7 @@
         iW = this.iW,
         iX = this.iX //起点坐标
         //清除指定区域
-      this.ctx.clearRect(iX, iX, iW, iW)
+      ctx.clearRect(iX, iX, iW, iW)
       ctx.fillStyle = color
       ctx.fillRect(iX, iX, iW, iW)
         //白色
