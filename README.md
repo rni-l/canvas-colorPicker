@@ -8,14 +8,14 @@
 
 只要把colorPicker.js和colorPicker.css导入就好了。按下面代码调用即可:
 
-		//html结构
-		<div class='colorPickerbox'>
-			<canvas id='colorPicker'></canvas>
-			<div class="colorPickerBtnWrap"></div>
-		</div>
+    //html结构
+    <div class='colorPickerbox'>
+      <canvas id='colorPicker'></canvas>
+      <div class="colorPickerBtnWrap"></div>
+    </div>
 
-		//调用代码
-		new ColorPicker({
+    //调用代码
+    new ColorPicker({
       oBox: document.querySelector('.colorPickerbox'),//最外层
       oBtnWrap: document.querySelector('.btnWrap'),//按钮外层
       oCan: document.querySelector('#colorPicker'),//画布
@@ -53,8 +53,8 @@
 
 这里是用从外环获取的颜色，加上白色从左到右的渐变，加上黑色从下到上的渐变，制造出来的。外环每次改变颜色后，正方形的颜色都要改变。
 
-		//原色
-		ctx.clearRect(iX, iX, iW, iW)
+    //原色
+    ctx.clearRect(iX, iX, iW, iW)
 	  ctx.fillStyle = color
 	  //只清除正方形那块区域
 	  ctx.fillRect(iX, iX, iW, iW)
