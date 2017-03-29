@@ -11,28 +11,31 @@
     padding: 0;
   }
   </style>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="colorPicker.css">
 </head>
 
 <body>
   <div class='colorPickerbox'>
     <canvas id='colorPicker'></canvas>
-    <div class="btnWrap"></div>
+    <div class="colorPickerBtnWrap"></div>
   </div>
-  <div style='width:50px;height:50px;font-size:12px;' id='t'></div>
+  <div style='width:150px;height:50px;font-size:12px;font-weight: bold;text-align:center;line-height: 50px;' id='t'></div>
   <script src='colorPicker.js'></script>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     new ColorPicker({
-      oBox: document.querySelector('.colorPickerbox'),
-      oBtnWrap: document.querySelector('.btnWrap'),
-      oCan: document.querySelector('#colorPicker'),
-      width: 200,
+      oBox: document.querySelector('.colorPickerbox'),//最外层
+      oBtnWrap: document.querySelector('.colorPickerBtnWrap'),//按钮外层
+      oCan: document.querySelector('#colorPicker'),//画布
+      width: 200,//画布宽高
       height: 200,
-      callback:function(color){
+      callback:function(color){//回调函数
         //color就是获取到的颜色
+        var oT = document.getElementById('t')
+        t.innerHTML = color
+        t.style.background = color
       }
-    }).init()
+    }).init()//初始化
   }, false)
   </script>
 </body>

@@ -4,6 +4,29 @@
 
 这里全采用canvas制作，没有使用到图片。
 
+## 如何使用
+
+只要把colorPicker.只要把colorPicker.css导入就好了。按下面代码调用即可:
+
+		//html结构
+		<div class='colorPickerbox'>
+	    <canvas id='colorPicker'></canvas>
+	    <div class="colorPickerBtnWrap"></div>
+	  </div>
+
+		//调用代码
+		new ColorPicker({
+      oBox: document.querySelector('.colorPickerbox'),//最外层
+      oBtnWrap: document.querySelector('.btnWrap'),//按钮外层
+      oCan: document.querySelector('#colorPicker'),//画布
+      width: 200,//画布宽高
+      height: 200,
+      callback:function(color){//回调函数
+        //color就是获取到的颜色
+      }
+    }).init()//初始化
+
+
 ## 制作外环颜色
 
 首先把外环的颜色制作出来，这里使用了hsl来处理。
@@ -58,4 +81,6 @@
 这里先求出移动的点到圆心点的距离，再判断这段距离是否大于内圆的半径且小于外圆的半径，这样就可以了。
 
 
-如果哪里有问题希望可以提出来，我再改进下 :)
+
+
+如果哪里有问题希望可以提出来，我再改进下，谢谢~~    :)
