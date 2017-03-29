@@ -29,9 +29,9 @@
 ## 绘制正方形的颜色。
 
 这里是用从外环获取的颜色，加上白色从左到右的渐变，加上黑色从下到上的渐变，制造出来的。外环每次改变颜色后，正方形的颜色都要改变。
-		
+
 		//原色
-		this.ctx.clearRect(iX, iX, iW, iW)
+		ctx.clearRect(iX, iX, iW, iW)
 	  ctx.fillStyle = color
 	  //只清除正方形那块区域
 	  ctx.fillRect(iX, iX, iW, iW)
