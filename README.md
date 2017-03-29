@@ -6,13 +6,13 @@
 
 ## 如何使用
 
-只要把colorPicker.只要把colorPicker.css导入就好了。按下面代码调用即可:
+只要把colorPicker.js和colorPicker.css导入就好了。按下面代码调用即可:
 
 		//html结构
 		<div class='colorPickerbox'>
-	    <canvas id='colorPicker'></canvas>
-	    <div class="colorPickerBtnWrap"></div>
-	  </div>
+			<canvas id='colorPicker'></canvas>
+			<div class="colorPickerBtnWrap"></div>
+		</div>
 
 		//调用代码
 		new ColorPicker({
