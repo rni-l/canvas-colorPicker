@@ -22,6 +22,9 @@
   <div style='width:150px;height:50px;font-size:12px;font-weight: bold;text-align:center;line-height: 50px;' id='t'></div>
   <script src='colorPicker.js'></script>
   <script>
+  document.addEventListener('touchmove',function(e){
+    e.preventDefault();
+  },false)
   document.addEventListener('DOMContentLoaded', function() {
     new ColorPicker({
       oBox: document.querySelector('.colorPickerbox'),//最外层
@@ -39,4 +42,5 @@
   }, false)
   </script>
 </body>
+
 </html>
