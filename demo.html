@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <title>Document</title>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  </style>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class='colorPickerbox'>
+    <canvas id='colorPicker'></canvas>
+    <div class="btnWrap"></div>
+  </div>
+  <div style='width:50px;height:50px;font-size:12px;' id='t'></div>
+  <script src='colorPicker.js'></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    new ColorPicker({
+      oBox: document.querySelector('.colorPickerbox'),
+      oBtnWrap: document.querySelector('.btnWrap'),
+      oCan: document.querySelector('#colorPicker'),
+      width: 200,
+      height: 200,
+      callback:function(color){
+        //color就是获取到的颜色
+      }
+    }).init()
+  }, false)
+  </script>
+</body>
+
+</html>
