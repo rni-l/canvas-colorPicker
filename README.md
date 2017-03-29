@@ -32,7 +32,7 @@
 首先把外环的颜色制作出来，这里使用了hsl来处理。
 ![Alt text](./color.png)
 
-使用moveTo和lineTo，一条条线的绘制出来，
+使用moveTo和lineTo，一条条线的绘制出来。起始位置是内圆坐标，终点位置外圆坐标，这样就可以制作出圆环了，而且中心是透明无色的。
 
 	for (var i = 0; i < 360; i += .1) {
     //获取度数
@@ -55,21 +55,21 @@
 
     //原色
     ctx.clearRect(iX, iX, iW, iW)
-	  ctx.fillStyle = color
-	  //只清除正方形那块区域
-	  ctx.fillRect(iX, iX, iW, iW)
-	  //白色渐变色
-	  var g = ctx.createLinearGradient(iX, (iX + iW) / 2, iX + iW, (iX + iW) / 2)
-	  g.addColorStop(0, "#FFFFFF")
-	  g.addColorStop(1, "rgba(255,255,255,0)");
-	  ctx.fillStyle = g;
-	  ctx.fillRect(iX, iX, iW, iW);
-	  //黑色渐变色
-	  var g = ctx.createLinearGradient(iX, iX + iW, iX, iX)
-	  g.addColorStop(0, "#000000")
-	  g.addColorStop(1, "rgba(0,0,0,0)");
-	  ctx.fillStyle = g;
-	  ctx.fillRect(iX, iX, iW, iW);
+    ctx.fillStyle = color
+    //只清除正方形那块区域
+    ctx.fillRect(iX, iX, iW, iW)
+    //白色渐变色
+    var g = ctx.createLinearGradient(iX, (iX + iW) / 2, iX + iW, (iX + iW) / 2)
+    g.addColorStop(0, "#FFFFFF")
+    g.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(iX, iX, iW, iW);
+    //黑色渐变色
+    var g = ctx.createLinearGradient(iX, iX + iW, iX, iX)
+    g.addColorStop(0, "#000000")
+    g.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(iX, iX, iW, iW);
 
 
 ## 获取颜色
