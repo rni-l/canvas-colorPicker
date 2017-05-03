@@ -66,6 +66,25 @@
       var move = _this.move.bind(_this);
 
       //给予事件
+
+      //pc端
+      this.oCan.addEventListener('mousedown', function(e) {
+        //获取canvas的left ,top 位置
+        if (!_this.oCan_left) {
+          var canPos = _this.getElemPos(_this.oCan)
+          _this.oCan_left = canPos.x
+          _this.oCan_top = canPos.y
+        }
+
+        _this.move(e);
+        document.addEventListener('mousemove', move, false);
+      }, false);
+      this.oCan.addEventListener('mouseup', function(e) {
+        //移出事件
+        document.removeEventListener('mousemove', move, false);
+      }, false);
+
+      //移动端
       this.oCan.addEventListener('touchstart', function(e) {
         //获取canvas的left ,top 位置
         if (!_this.oCan_left) {
@@ -81,6 +100,8 @@
         //移出事件
         document.removeEventListener('touchmove', move, false);
       }, false);
+
+
 
     },
     createInsideColor: function(color) {
@@ -110,7 +131,7 @@
     },
     move: function(e) {
       //移动事件
-      var t = e.touches[0],
+      var t = e.touches ? e.touches[0] : e,
         x = t.pageX - this.oCan_left,
         y = t.pageY - this.oCan_top
 
