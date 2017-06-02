@@ -1,13 +1,12 @@
 (function() {
   function ColorPicker(params) {
-    this.oBox = params.oBox
-    this.oBtnWrap = params.oBtnWrap
-    this.oCan = params.oCan
+    this.oBox = params.oBox//最外层盒子
+    this.oBtnWrap = params.oBtnWrap//按钮外层盒子
+    this.oCan = params.oCan//画布
     this.ctx = params.oCan.getContext('2d')
-    this.oCan.width = params.width
-    this.oCan.height = params.height
-    this.w = this.oCan.width
-    this.h = this.oCan.height
+
+    this.w = params.width//画布的宽高
+    this.h = params.width
     this.lineW = 20 //外层颜色的厚度
     this.r = this.w / 2 //外圆半径
     this.r2 = this.r - this.lineW //内圆半径
@@ -22,29 +21,64 @@
       insideY: 0
     }
     this.callback = params.callback;
+    this.bindMove = null;
   }
 
   ColorPicker.prototype = {
     init: function() {
       //初始化
+      this.oCan.width = this.w;
+      this.oCan.height = this.h;
       //生成节点（内外层选择点）
-      this.oBtnWrap.innerHTML = '<div class="insideBtn"></div><div class="outsideBtn"></div>'
-        //两个颜色选择点
-      this.oInsideBtn = document.querySelector(".insideBtn")
-      this.oOutsideBtn = document.querySelector(".outsideBtn")
-      this.btnW = this.oInsideBtn.offsetWidth
-
+      this.oBtnWrap.innerHTML = '<div class="insideBtn"></div><div class="outsideBtn"></div>';
+      //两个颜色选择点
+      this.oInsideBtn = document.querySelector(".insideBtn");
+      this.oOutsideBtn = document.querySelector(".outsideBtn");
+      //按钮宽度
+      this.btnW = this.oInsideBtn.offsetWidth;
       
       var x = this.w / 2,
         y = this.h / 2,
         _this = this,
         r2 = this.r2
       //按钮位置初始化
-      this.transform(this.oInsideBtn, 'translate(' + (this.iW + this.iX - this.btnW) + 'px ,' + this.iX + 'px)')
-      this.transform(this.oOutsideBtn, 'translate(' + x + 'px ,' + 0 + 'px)')
+      this.transform(this.oInsideBtn, 'translate(' + (this.iW + this.iX - this.btnW) + 'px ,' + this.iX + 'px)');
+      this.transform(this.oOutsideBtn, 'translate(' + x + 'px ,' + 0 + 'px)');
       this.opts.insideX = this.iW + this.iX - this.btnW;
       this.opts.insideY = this.iX;
       //生成外层颜色
+      this.createColorBg(x,y);
+
+      //生成内颜色
+      this.createInsideColor('red');
+      var move = _this.move.bind(this);
+      this.bindMove = this.move.bind(this);
+      //给予事件
+      //pc端
+      this.oBox.addEventListener('mousedown', this.addMove.bind(this), false);
+      this.oBox.addEventListener('mouseup', this.removeMove.bind(this), false);
+
+      //移动端
+      this.oCan.addEventListener('touchstart', this.addMove.bind(this), false);
+      this.oCan.addEventListener('touchend', this.removeMove.bind(this), false);
+    },
+    addMove(e){
+      //获取canvas的left ,top 位置
+      if (!this.oCan_left) {
+        var canPos = this.getElemPos(this.oCan)
+        this.oCan_left = canPos.x
+        this.oCan_top = canPos.y
+      }
+      //颜色初始化
+      this.move(e);
+      document.addEventListener('mousemove', this.bindMove, false);
+    },
+    removeMove(){
+      console.log('out')
+      document.removeEventListener('mousemove', this.bindMove, false);
+    },
+    createColorBg(x,y){
+      //生成圆环颜色
       var ctx = this.ctx;
       for (var i = 0; i < 360; i += .1) {
         //获取度数
@@ -60,49 +94,6 @@
         ctx.stroke();
         ctx.closePath();
       }
-
-      //生成内颜色
-      this.createInsideColor('red');
-      var move = _this.move.bind(_this);
-
-      //给予事件
-
-      //pc端
-      this.oCan.addEventListener('mousedown', function(e) {
-        //获取canvas的left ,top 位置
-        if (!_this.oCan_left) {
-          var canPos = _this.getElemPos(_this.oCan)
-          _this.oCan_left = canPos.x
-          _this.oCan_top = canPos.y
-        }
-
-        _this.move(e);
-        document.addEventListener('mousemove', move, false);
-      }, false);
-      this.oCan.addEventListener('mouseup', function(e) {
-        //移出事件
-        document.removeEventListener('mousemove', move, false);
-      }, false);
-
-      //移动端
-      this.oCan.addEventListener('touchstart', function(e) {
-        //获取canvas的left ,top 位置
-        if (!_this.oCan_left) {
-          var canPos = _this.getElemPos(_this.oCan)
-          _this.oCan_left = canPos.x
-          _this.oCan_top = canPos.y
-        }
-
-        _this.move(e);
-        document.addEventListener('touchmove', move, false);
-      }, false);
-      this.oCan.addEventListener('touchend', function(e) {
-        //移出事件
-        document.removeEventListener('touchmove', move, false);
-      }, false);
-
-
-
     },
     createInsideColor: function(color) {
       //生成内颜色
@@ -134,7 +125,6 @@
       var t = e.touches ? e.touches[0] : e,
         x = t.pageX - this.oCan_left,
         y = t.pageY - this.oCan_top
-
       var pos = this.btnPosition(x, y);
       if (!pos) {
         return false; }
@@ -156,6 +146,7 @@
         h = this.h,
         iW = this.iW,
         iX = this.iX;
+
       //获取圆心到点的距离
       var d = Math.sqrt(Math.pow((x - w / 2), 2) + Math.pow((y - h / 2), 2))
         //判断在内层颜色内
@@ -218,6 +209,7 @@
       return rgb
     },
     getElemPos: function(obj) {
+      //获取目标，到最外层的offsetLeft和offsetTop
       var pos = {
         "top": 0,
         "left": 0
@@ -240,14 +232,16 @@
     }
   }
 
-  window.ColorPicker = ColorPicker;
+  //声明模块
+  if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+    define(function() {
+      return ColorPicker;
+    });
+  } else if (typeof module !== 'undefined' && module.exports) {
+    module.exports.ColorPicker = ColorPicker;
+  } else {
+    window.ColorPicker = ColorPicker;
+  }
 }());
 
-if (typeof(module) !== 'undefined') {
-  module.exports = window.ColorPicker;
-} else if (typeof define === 'function' && define.amd) {
-  define([], function() {
-    'use strict';
-    return window.ColorPicker;
-  });
-}
+
