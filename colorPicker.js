@@ -72,10 +72,12 @@
       //颜色初始化
       this.move(e);
       document.addEventListener('mousemove', this.bindMove, false);
+      document.addEventListener('touchmove', this.bindMove, false);
     },
     removeMove:function(){
       console.log('out')
       document.removeEventListener('mousemove', this.bindMove, false);
+      document.removeEventListener('touchmove', this.bindMove, false);
     },
     createColorBg:function(x,y){
       //生成圆环颜色
