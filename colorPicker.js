@@ -62,7 +62,7 @@
       this.oCan.addEventListener('touchstart', this.addMove.bind(this), false);
       this.oCan.addEventListener('touchend', this.removeMove.bind(this), false);
     },
-    addMove(e){
+    addMove:function(e){
       //获取canvas的left ,top 位置
       if (!this.oCan_left) {
         var canPos = this.getElemPos(this.oCan)
@@ -73,11 +73,11 @@
       this.move(e);
       document.addEventListener('mousemove', this.bindMove, false);
     },
-    removeMove(){
+    removeMove:function(){
       console.log('out')
       document.removeEventListener('mousemove', this.bindMove, false);
     },
-    createColorBg(x,y){
+    createColorBg:function(x,y){
       //生成圆环颜色
       var ctx = this.ctx;
       for (var i = 0; i < 360; i += .1) {
