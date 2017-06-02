@@ -1,6 +1,6 @@
-# 这是一个使用canvas制作的，移动端颜色选择器。
+# 这是一个使用canvas制作的，颜色选择器，支持PC和移动端。
 
-这是[demo](https://yiiouo.github.io/canvas-colorPicker/)链接，用手机打开或者用移动端模式。
+这是[demo](https://yiiouo.github.io/canvas-colorPicker/)链接，支持PC和移动端。
 
 这里全采用canvas制作，没有使用到图片。
 
