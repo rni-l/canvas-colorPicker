@@ -1,4 +1,4 @@
-(function() {
+(function(){
   function ColorPicker(params) {
     this.oBox = params.oBox//最外层盒子
     this.oBtnWrap = params.oBtnWrap//按钮外层盒子
@@ -217,7 +217,7 @@
         "left": 0
       };
       if (obj.offsetParent) {
-        while (obj.offsetParent) {
+        while (obj) {
           pos.top += obj.offsetTop;
           pos.left += obj.offsetLeft;
           obj = obj.offsetParent;
@@ -244,6 +244,5 @@
   } else {
     window.ColorPicker = ColorPicker;
   }
+
 }());
-
-
