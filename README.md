@@ -1,30 +1,33 @@
 # 这是一个使用canvas制作的，颜色选择器，支持PC和移动端。
 
-这是[demo](https://yiiouo.github.io/canvas-colorPicker/)链接，支持PC和移动端。
+这是[demo](http://www.rni-l.com/project/canvas-colorPicker/)链接，支持PC和移动端。
 
 这里全采用canvas制作，没有使用到图片。
 
 ## 如何使用
 
-只要把colorPicker.js和colorPicker.css导入就好了。按下面代码调用即可:
+commonjs:
+```
+import ColorPicker from '../colorPicker.js'
 
-    //html结构
-    <div class='colorPickerbox'>
-      <canvas id='colorPicker'></canvas>
-      <div class="colorPickerBtnWrap"></div>
-    </div>
+new ColorPicker({
+  dom: '.wrap',
+  width: 200,//画布宽高
+  height: 200,
+  outsideWidh: 30,
+  callback(color) {
+    // color
+  }
+}).init()
+```
 
-    //调用代码
-    new ColorPicker({
-      oBox: document.querySelector('.colorPickerbox'),//最外层
-      oBtnWrap: document.querySelector('.btnWrap'),//按钮外层
-      oCan: document.querySelector('#colorPicker'),//画布
-      width: 200,//画布宽高
-      height: 200,
-      callback:function(color){//回调函数
-        //color就是获取到的颜色
-      }
-    }).init()//初始化
+通过 script 标签引入
+```
+<script src='colorPicker.js'></script>
+window.ColorPicker({ ... })
+```
+
+不需要写 html 和 css
 
 ## 兼容性
 
@@ -37,42 +40,53 @@
 
 使用moveTo和lineTo，一条条线的绘制出来。起始位置是内圆坐标，终点位置外圆坐标，这样就可以制作出圆环了，而且中心是透明无色的。
 
-	for (var i = 0; i < 360; i += .1) {
-    //获取度数
-    var rad = i * (2 * Math.PI) / 360,
-      c_x = Math.cos(rad),
-      c_y = Math.sin(rad),
-      //外环的厚度
-      lineW = this.lineW
-    ctx.strokeStyle = "hsl(" + i + ", 100%, 50%)";
-    ctx.beginPath();
-    ctx.moveTo(x + (x - lineW) * c_x, y + (y - lineW) * c_y);
-    //求出另外两点坐标
-    ctx.lineTo(x + x * c_x, y + y * c_y);
-    ctx.stroke();
-    ctx.closePath();}
+```
+const ctx = this.ctx
+for (let i = 0; i < 360; i += 0.1) {
+  // 获取度数
+  const rad = i * (2 * Math.PI) / 360,
+    c_x = Math.cos(rad),
+    c_y = Math.sin(rad),
+    lineW = this.lineW
+  ctx.strokeStyle = "hsl(" + i + ", 100%, 50%)"
+  ctx.beginPath()
+  ctx.moveTo(x + (x - lineW) * c_x, y + (y - lineW) * c_y)
+  // 求出另外两点坐标
+  ctx.lineTo(x + x * c_x, y + y * c_y)
+  ctx.stroke()
+  ctx.closePath()
+}
+```
 
 ## 绘制正方形的颜色。
 
 这里是用从外环获取的颜色，加上白色从左到右的渐变，加上黑色从下到上的渐变，制造出来的。外环每次改变颜色后，正方形的颜色都要改变。
 
-    //原色
-    ctx.clearRect(iX, iX, iW, iW)
-    ctx.fillStyle = color
-    //只清除正方形那块区域
-    ctx.fillRect(iX, iX, iW, iW)
-    //白色渐变色
-    var g = ctx.createLinearGradient(iX, (iX + iW) / 2, iX + iW, (iX + iW) / 2)
-    g.addColorStop(0, "#FFFFFF")
-    g.addColorStop(1, "rgba(255,255,255,0)");
-    ctx.fillStyle = g;
-    ctx.fillRect(iX, iX, iW, iW);
-    //黑色渐变色
-    var g = ctx.createLinearGradient(iX, iX + iW, iX, iX)
-    g.addColorStop(0, "#000000")
-    g.addColorStop(1, "rgba(0,0,0,0)");
-    ctx.fillStyle = g;
-    ctx.fillRect(iX, iX, iW, iW);
+```
+reateInsideColor(color) {
+  // 生成内颜色
+  const ctx = this.ctx,
+    rectW = this.rectW,
+    rectX = this.rectX // 起点坐标
+  // 清除指定区域
+  ctx.clearRect(rectX, rectX, rectW, rectW)
+  ctx.fillStyle = color
+  ctx.fillRect(rectX, rectX, rectW, rectW)
+  // 白色
+  let g = ctx.createLinearGradient(rectX, (rectX + rectW) / 2, rectX + rectW, (rectX + rectW) / 2)
+  g.addColorStop(0, "#FFFFFF")
+  g.addColorStop(1, "rgba(255,255,255,0)")
+  ctx.fillStyle = g
+  ctx.fillRect(rectX, rectX, rectW, rectW)
+
+  // 黑色
+  g = ctx.createLinearGradient(rectX, rectX + rectW, rectX, rectX)
+  g.addColorStop(0, "#000000")
+  g.addColorStop(1, "rgba(0,0,0,0)")
+  ctx.fillStyle = g
+  ctx.fillRect(rectX, rectX, rectW, rectW)
+}
+```
 
 
 ## 获取颜色
